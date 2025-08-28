@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>absen siswa sederhana</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1>Absensi Siswa</h1>
+
+    <form id="formAbsen">
+      <input type="text" id="nama" placeholder="Nama Siswa">
+      <input type="text" id="kelas" placeholder="Kelas">
+      <button type="submit">Absen</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama</th>
+          <th>Kelas</th>
+          <th>Waktu Absen</th>
+          <th>Perbarui</th>
+        </tr>
+      </thead>
+
+      <tbody id="daftarAbsen"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const form = document.getElementById('formAbsen');
+    const daftarAbsen = document.getElementById('daftarAbsen');
+    let nomor = 1;
+
+    form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const namaInput = document.getElementById('nama');
+    const kelasInput = document.getElementById('kelas');
+    const nama = namaInput.value.trim();
+    const kelas = kelasInput.value.trim();
+
+    // validasi input
+    if (nama === '' || kelas === '') {
+    alert('Nama dan kelas harus diisi!');
+    return;
+    }
+
+    const waktu = new Date().toLocaleString('id-ID');
+
+    // buat baris baru
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${nomor}</td>
+      <td class="editable">${nama}</td>
+      <td class="editable">${kelas}</td>
+      <td>${waktu}</td>
+      <td><button class="hapus">Hapus</button></td>
+    `;
+
+    // Hapus baris
+    tr.querySelector('.hapus').addEventListener('click', function() {
+      tr.remove();
+    updateNomor();
+    });
+
+    // Edit langsung di tabel
+    tr.querySelectorAll('.editable').forEach(td => {
+      td.addEventListener('click', function() {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = td.textContent;
+        td.textContent = '';
+        td.appendChild(input);
+        input.focus();
+
+    // Simpan saat enter 
+      input.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            if (input.value.trim() === '') {
+              alert('Nama dan kelas harus diisi!');
+              e.preventDefault();
+              input.focus();
+            } else {
+              td.textContent = input.value.trim();
+            }
+           }
+          });
+        });
+      });
+
+    //  tambah baris ke tabel
+          daftarAbsen.appendChild(tr);
+          nomor++;
+          form.reset();
+        });
+
+    // Update nomor urut
+          function updateNomor() {
+          const rows = daftarAbsen.querySelectorAll('tr');
+          let no = 1;
+          rows.forEach(row => {
+          row.cells[0].textContent = no; // set nomer baru
+          no++;
+          });
+          nomor = no; // update variabel nomor untuk baris berikut nya
+          }
+  </script>
+
+</body>
+</html>
