@@ -67,6 +67,7 @@
     // Edit langsung di tabel
     tr.querySelectorAll('.editable').forEach(td => {
       td.addEventListener('click', function() {
+        const oldValue = td.textContent;
         const input = document.createElement('input');
         input.type = 'text';
         input.value = td.textContent;
@@ -77,11 +78,31 @@
     // Simpan saat enter 
       input.addEventListener('keypress', function(e) {
           if (e.key === 'Enter') {
+            const newValue = input.value.trim();
               td.textContent = input.value.trim();
+              if (newValue === '') {
+                td.classList.add('error');
+                td.textContent = oldValue;
+              } else {
+                td.classList.remove('error');
+                td.textContent = newValue;
             }
-           });
-        });
+          }
       });
+
+    // simpan otomatis pas blur{
+      input.addEventListener('blur', function () {
+        const newValue = input.value.trim();
+        if (newValue === '') {
+          td.classList.add('error');
+          td.textContent = oldValue;
+        } else {
+          td.classList.remove('error');
+          td.textContent = newValue;
+        }
+      });
+    });
+  });
 
     //  tambah baris ke tabel
           daftarAbsen.appendChild(tr);

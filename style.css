@@ -72,6 +72,11 @@ td.editable:hover {
   background-color: #e0f7fa;
 }
 
+.error {
+  background-color: #ff0000;
+  border: 1px solid red;
+}
+
 /* hapus */
 button.hapus {
   background-color: #f44336;
