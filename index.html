@@ -12,8 +12,8 @@
     <h1>Absensi Siswa</h1>
 
     <form id="formAbsen">
-      <input type="text" id="nama" placeholder="Nama Siswa">
-      <input type="text" id="kelas" placeholder="Kelas">
+      <input type="text" id="nama" placeholder="Nama Siswa" required>
+      <input type="text" id="kelas" placeholder="Kelas" required>
       <button type="submit">Absen</button>
     </form>
 
@@ -44,12 +44,6 @@
     const kelasInput = document.getElementById('kelas');
     const nama = namaInput.value.trim();
     const kelas = kelasInput.value.trim();
-
-    // validasi input tdk bole kosong
-    if (nama === '' || kelas === '') {
-    alert('Nama dan kelas harus diisi!');
-    return;
-    }
 
     // waktu saat mengirim
     const waktu = new Date().toLocaleString('id-ID');
@@ -83,15 +77,9 @@
     // Simpan saat enter 
       input.addEventListener('keypress', function(e) {
           if (e.key === 'Enter') {
-            if (input.value.trim() === '') {
-              alert('Nama dan kelas harus diisi!');
-              e.preventDefault();
-              input.focus();
-            } else {
               td.textContent = input.value.trim();
             }
-           }
-          });
+           });
         });
       });
 
