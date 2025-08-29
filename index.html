@@ -45,12 +45,13 @@
     const nama = namaInput.value.trim();
     const kelas = kelasInput.value.trim();
 
-    // validasi input
+    // validasi input tdk bole kosong
     if (nama === '' || kelas === '') {
     alert('Nama dan kelas harus diisi!');
     return;
     }
 
+    // waktu saat mengirim
     const waktu = new Date().toLocaleString('id-ID');
 
     // buat baris baru
